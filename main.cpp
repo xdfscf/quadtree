@@ -7,7 +7,11 @@
 #include"changetree.h"
 
 int main( int argc, char **argv ) {
-
+totalRemove=0;
+totalAdd=0;
+max=0;
+removes=0;
+count=0;
   Node *head;
   int i; 
 
@@ -26,20 +30,12 @@ int main( int argc, char **argv ) {
   growtree(head);
   /*growtree(head);*/ 
   // print the tree for Gnuplot
-  //breaktree(head);
-  removes=1;
-  
-  for (;removes!=0;)
-  {
-  removes=0;
-  count=0;
-  interesttree(head,0.0,6);
-  printf("%i\n",removes);
-  printf("%i\n",count);
-  }
-  
+  adapt(head);
+  printf("totalremove %i \n",totalRemove);
+  printf("totaladd %i\n",totalAdd);
   writeTree( head );
-
+  breaktree(head);
+  //freetree(head);
   return 0;
 }
 

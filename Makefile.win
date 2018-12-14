@@ -4,8 +4,8 @@
 CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = buildTree.o main.o writeTree.o
-LINKOBJ  = buildTree.o main.o writeTree.o
+OBJ      = buildTree.o main.o writeTree.o changetree.o
+LINKOBJ  = buildTree.o main.o writeTree.o changetree.o
 LIBS     = -L"C:/Users/think/Desktop/Dev-Cpp/MinGW64/lib" -L"C:/Users/think/Desktop/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc
 INCS     = -I"C:/Users/think/Desktop/Dev-Cpp/MinGW64/include" -I"C:/Users/think/Desktop/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Users/think/Desktop/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
 CXXINCS  = -I"C:/Users/think/Desktop/Dev-Cpp/MinGW64/include" -I"C:/Users/think/Desktop/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Users/think/Desktop/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Users/think/Desktop/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
@@ -32,3 +32,6 @@ main.o: main.cpp
 
 writeTree.o: writeTree.cpp
 	$(CPP) -c writeTree.cpp -o writeTree.o $(CXXFLAGS)
+
+changetree.o: changetree.cpp
+	$(CPP) -c changetree.cpp -o changetree.o $(CXXFLAGS)

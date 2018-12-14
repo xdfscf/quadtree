@@ -3,8 +3,12 @@
 #include "math.h"
 #include"treeStructure.h"
 #include"buildtree.h"
-int removes=0;
-int count=0;
+#define maxlevel 6
+int removes;
+int count;
+int max;
+int totalRemove;
+int totalAdd;
 double value( double x, double y, double time );
 void breaktree(Node *parent)
 {
@@ -90,63 +94,54 @@ double value( double x, double y, double time ) {
     interesttree(parent,time,level)
     return;
 }*/
-void interesttree(Node *node, double time,int level )
+void change(Node *node, double time )
 {
 	int b=0,i,z=0,k=0;
 	double a,c;
 	//printf("%f\n",a);
-	if(level==0)
-	return;
+	
+	
+    a=nodeValue( node, time );
+	if (node->child[0]==NULL&&a>0.5)
+	{
+		node->flag=1;
+		makeChildren(node);
+		count+=4;
+		if(node->child[0]->level==maxlevel)
+		max=1;
+		return;
+	}
+	
 	if (node->child[0]!=NULL)
 	{   
 	for(i=0;i<4;i++)
 	{
-		if(node->child[i]->child[i]!=NULL)
-		z=1;
+		if(node->child[i]->child[0]==NULL&&nodeValue(node->child[i],time)<-0.5)
+		z+=1;
 	}
-	if(z==1)
+	if(z==4)
 	{
-	for(i=0;i<4;i++)	
-	interesttree(node->child[i],time,level-1);
+	removes+=4;
+	freetree(node);
 	return;
-	} 
-	else
-	{
-	k=1;
-	goto abc;
+	}
+	for(i=0;i<4;i++)
+	change(node->child[i],time);
+	return;
 }
-    }
-	a=nodeValue( node, time );
-	if (a>0.5)
-	{
-		node->flag=0;
-		makeChildren(node);
-		abc:
-		for(i=0;i<4;i++)
-		{
-			c=nodeValue(node->child[i],time);
-			if(c<-0.5)
-			{
-			b+=1;
-			node->child[i]->flag=-1;
-		    }
-			else if(c>0.5)
-			{
-			node->child[i]->flag=1;
-			interesttree(node->child[i],time,level-1);
-			if(k!=1)
-			count+=1;
-		    }
-		    else
-		    node->child[i]->flag=0;
-		    //printf("%f\n",c);
-		}
-		if(b==4)
-		{
-			removes+=4;
-		   	freetree(node);
-		   	
-		}
-	}
-	return;
+}
+void adapt(Node *head)
+{
+  int i=0;
+  Node *node;
+  do 
+  {
+  removes=0;
+  count=0;
+  change(head,0.0);
+  totalRemove+=removes;
+  totalAdd+=count; 
+  printf("remove %i children\n",removes);
+  printf("add %i children\n",count);
+  }while(removes!=0||count!=0&&max==0);
 }
